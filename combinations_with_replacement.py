@@ -1,4 +1,4 @@
-from itertools import combinations_with_replacement as co
+from itertools import combinations_with_replacement as itertools_c_w_r
 import time
 
 
@@ -23,25 +23,29 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
         return []
     nums = list(range(1, n+1) if human_count else range(n))
 
-    operating_combo = [nums[0] for _ in range(r)]
-    yield tuple(operating_combo)
+    rec_combo = [nums[0] for _ in range(r)]
+    yield tuple(rec_combo)
 
     while True:
-        for i in range(len(operating_combo)-1, -1, -1):
-            if operating_combo[i]+1 in nums:
-                combo = operating_combo
-                combo[i] = operating_combo[i]+1
-                yield tuple(combo.copy())
+        # step 1
+        for i in range(len(rec_combo)-1, -1, -1):
+            if rec_combo[i]+1 in nums:
+
+                # step 2
+                rec_combo[i] += 1
+
+                yield tuple(rec_combo)
                 break
 
-            if i == 0:
-                return
+            if i == 0: return
 
-            if not operating_combo[i-1] + 1 in nums:
+            if not rec_combo[i-1] + 1 in nums:
                 continue
 
-            operating_combo[i-1:] = [operating_combo[i-1]+1]*(len(operating_combo)-i+1)
-            yield tuple(operating_combo.copy())
+            # step 3
+            rec_combo[i-1:] = [rec_combo[i-1]+1]*(len(rec_combo)-i+1)
+
+            yield tuple(rec_combo)
 
             break
 
@@ -49,4 +53,15 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+    n, r = 3, 5
+
+    start_time = time.time()
+    corr = list(itertools_c_w_r(range(n), r))
+    print(time.time()-start_time)
+
+
+    start_time = time.time()
+    mine = list(combinations_with_replacement(r, n))
+    print(time.time()-start_time)
+    print(corr == mine)
 
