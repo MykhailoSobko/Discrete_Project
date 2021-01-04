@@ -2,7 +2,6 @@
 This module implements a number of iterator building blocks.
 """
 
-
 def count(start=0, step=1):
     '''
     Return infinite iterator through evenly spaced numbers
@@ -75,7 +74,7 @@ def permutations(iterable, r=None):
     '''
     (iterable, int) -> generator
 
-    Returns the placement generator elements from iterable to length elements 
+    Returns the placement generator elements from iterable to length elements
     (when length is not specified - just permutation generator)
 
     >>> list(permutations('ABC', 3))

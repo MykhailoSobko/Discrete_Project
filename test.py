@@ -144,4 +144,3 @@ def test_product_3():
 def test_product_4():
     gen = tools.product([3, 4], [0, 1, 2])
     assert [next(gen) for _ in range(5)] == [(3, 0), (3, 1), (3, 2), (4, 0), (4, 1)]
-
